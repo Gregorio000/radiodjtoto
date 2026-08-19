@@ -1,0 +1,12 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* Riserva in fondo alla pagina lo spazio della barra del player fissa,
+     così l'intero footer resta visibile e non finisce mai coperto. */
+  padding-bottom: var(--player-height);
+}
+
+.main {
+  flex: 1 0 auto;
+}
