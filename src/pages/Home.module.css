@@ -1,3 +1,12 @@
+/* Zona centrale (tra hero e footer) con la foto di Napoli come sfondo. */
+.body {
+  background-image: url('/musica.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  padding-bottom: 2.5rem;
+}
+
 .nowSection {
   padding-top: clamp(2.5rem, 6vw, 4rem);
   /* Compensa l'header sticky quando si arriva qui dall'ancora #in-onda. */
@@ -47,6 +56,6 @@
 
 @media (max-width: 760px) {
   .grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
