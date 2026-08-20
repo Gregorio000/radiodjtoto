@@ -9,4 +9,6 @@
 
 .main {
   flex: 1 0 auto;
+  /* Evita scroll orizzontale su mobile con titoli molto lunghi. */
+  overflow-x: hidden;
 }

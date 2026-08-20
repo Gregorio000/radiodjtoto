@@ -72,8 +72,23 @@
 
 .social {
   display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.socialIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: var(--brand, var(--color-text-muted));
+  transition: transform 0.15s var(--ease);
+}
+
+.socialIcon:hover {
+  transform: translateY(-2px);
 }
 
 .email {

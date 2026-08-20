@@ -19,7 +19,12 @@ const images = Array.from(
   (_, i) => `/foto (${i + 1}).${EXT}`
 );
 
-export function Carosello() {
+/**
+ * @param fill  Se true, il carosello riempie il contenitore genitore come
+ *              sfondo (nessun bordo/arrotondamento, niente pallini): usato
+ *              dietro la hero.
+ */
+export function Carosello({ fill = false }: { fill?: boolean }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [paused, setPaused] = useState(false);
 
@@ -33,7 +38,7 @@ export function Carosello() {
 
   return (
     <div
-      className={styles.wrap}
+      className={`${styles.wrap} ${fill ? styles.fill : ''}`}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       role="region"
@@ -55,21 +60,23 @@ export function Carosello() {
         />
       ))}
 
-      {/* Velo scuro in basso per far risaltare i pallini. */}
-      <div className={styles.veil} aria-hidden="true" />
+      {/* Velo scuro in basso per far risaltare i pallini (solo modalità card). */}
+      {!fill && <div className={styles.veil} aria-hidden="true" />}
 
-      <div className={styles.dots}>
-        {images.map((_, i) => (
-          <button
-            key={i}
-            type="button"
-            className={`${styles.dot} ${i === currentIndex ? styles.dotActive : ''}`}
-            aria-label={`Vai all'immagine ${i + 1}`}
-            aria-current={i === currentIndex}
-            onClick={() => setCurrentIndex(i)}
-          />
-        ))}
-      </div>
+      {!fill && (
+        <div className={styles.dots}>
+          {images.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              className={`${styles.dot} ${i === currentIndex ? styles.dotActive : ''}`}
+              aria-label={`Vai all'immagine ${i + 1}`}
+              aria-current={i === currentIndex}
+              onClick={() => setCurrentIndex(i)}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

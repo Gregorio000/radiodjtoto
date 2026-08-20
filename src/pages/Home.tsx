@@ -1,7 +1,7 @@
 import { usePlayer } from '../context/PlayerContext';
+import { Hero } from '../components/hero/Hero';
 import { NowPlaying } from '../components/nowplaying/NowPlaying';
 import { TrackList } from '../components/tracklist/TrackList';
-import { Carosello } from '../components/carousel/Carosello';
 import { isDemoMode } from '../config';
 import styles from './Home.module.css';
 
@@ -14,27 +14,11 @@ export function Home() {
 
   return (
     <>
-      {/* Carosello immagini */}
-      <section className={`container ${styles.carousel}`}>
-        <Carosello />
-      </section>
-
-      {/* Hero */}
-      <section className={`container ${styles.hero}`}>
-        <span className="eyebrow">Radio · Napoli · In diretta</span>
-        <h1 className={styles.heroTitle}>
-          La voce di Napoli, <br />
-          <span className={styles.accent}>senza mai spegnersi.</span>
-        </h1>
-        <p className={styles.heroLead}>
-          RadioDJToto è la radio dedicata alla canzone napoletana: classici
-          immortali e nuove voci della tradizione partenopea, in onda 24 ore su
-          24.
-        </p>
-      </section>
+      {/* Hero con carosello di sfondo */}
+      <Hero />
 
       {/* In onda ora */}
-      <section className="container">
+      <section id="in-onda" className={`container ${styles.nowSection}`}>
         <NowPlaying />
       </section>
 

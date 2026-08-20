@@ -1,8 +1,22 @@
 import { Link } from 'react-router-dom';
 import { config } from '../../config';
+import {
+  InstagramIcon,
+  FacebookIcon,
+  YouTubeIcon,
+  TikTokIcon,
+} from '../common/Icons';
 import styles from './Footer.module.css';
 
 const year = new Date().getFullYear();
+
+/** Social con i rispettivi colori di brand. */
+const socials = [
+  { name: 'Instagram', href: config.social.instagram, Icon: InstagramIcon, color: '#E4405F' },
+  { name: 'Facebook', href: config.social.facebook, Icon: FacebookIcon, color: '#1877F2' },
+  { name: 'YouTube', href: config.social.youtube, Icon: YouTubeIcon, color: '#FF0000' },
+  { name: 'TikTok', href: config.social.tiktok, Icon: TikTokIcon, color: '#111111' },
+];
 
 /** Piè di pagina con social, contatti e informazioni legali. */
 export function Footer() {
@@ -33,18 +47,19 @@ export function Footer() {
         <div className={styles.col}>
           <h4 className={styles.colTitle}>Seguici</h4>
           <div className={styles.social}>
-            <a href={config.social.instagram} target="_blank" rel="noreferrer noopener">
-              Instagram
-            </a>
-            <a href={config.social.facebook} target="_blank" rel="noreferrer noopener">
-              Facebook
-            </a>
-            <a href={config.social.youtube} target="_blank" rel="noreferrer noopener">
-              YouTube
-            </a>
-            <a href={config.social.tiktok} target="_blank" rel="noreferrer noopener">
-              TikTok
-            </a>
+            {socials.map(({ name, href, Icon, color }) => (
+              <a
+                key={name}
+                className={styles.socialIcon}
+                style={{ color }}
+                href={href}
+                target="_blank"
+                rel="noreferrer noopener"
+                aria-label={name}
+              >
+                <Icon />
+              </a>
+            ))}
           </div>
           <a className={styles.email} href={`mailto:${config.contact.email}`}>
             {config.contact.email}

@@ -1,5 +1,7 @@
-.carousel {
-  padding-top: clamp(1.4rem, 3vw, 2.4rem);
+.nowSection {
+  padding-top: clamp(2.5rem, 6vw, 4rem);
+  /* Compensa l'header sticky quando si arriva qui dall'ancora #in-onda. */
+  scroll-margin-top: 84px;
 }
 
 .hero {
@@ -26,7 +28,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 1.6rem;
   margin-top: 1.6rem;
 }

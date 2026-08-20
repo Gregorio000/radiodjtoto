@@ -1,6 +1,20 @@
 import { config } from '../config';
+import {
+  InstagramIcon,
+  FacebookIcon,
+  YouTubeIcon,
+  TikTokIcon,
+} from '../components/common/Icons';
 import styles from './Contact.module.css';
 import page from './Page.module.css';
+
+/** Social con i rispettivi colori di brand. */
+const socials = [
+  { name: 'Instagram', href: config.social.instagram, Icon: InstagramIcon, color: '#E4405F' },
+  { name: 'Facebook', href: config.social.facebook, Icon: FacebookIcon, color: '#1877F2' },
+  { name: 'YouTube', href: config.social.youtube, Icon: YouTubeIcon, color: '#FF0000' },
+  { name: 'TikTok', href: config.social.tiktok, Icon: TikTokIcon, color: '#111111' },
+];
 
 /**
  * Pagina "Contatti": solo i recapiti diretti (email, luogo, social),
@@ -50,38 +64,19 @@ export function Contact() {
         <article className={`${styles.card} ${styles.socialCard}`}>
           <span className={styles.label}>Seguici sui social</span>
           <div className={styles.socialRow}>
-            <a
-              className={styles.socialLink}
-              href={config.social.instagram}
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              Instagram
-            </a>
-            <a
-              className={styles.socialLink}
-              href={config.social.facebook}
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              Facebook
-            </a>
-            <a
-              className={styles.socialLink}
-              href={config.social.youtube}
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              YouTube
-            </a>
-            <a
-              className={styles.socialLink}
-              href={config.social.tiktok}
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              TikTok
-            </a>
+            {socials.map(({ name, href, Icon, color }) => (
+              <a
+                key={name}
+                className={styles.socialLink}
+                style={{ color }}
+                href={href}
+                target="_blank"
+                rel="noreferrer noopener"
+                aria-label={name}
+              >
+                <Icon size={24} />
+              </a>
+            ))}
           </div>
         </article>
       </section>

@@ -91,6 +91,7 @@
 .title {
   font-size: clamp(1.8rem, 4vw, 2.8rem);
   margin: 0 0 0.2em;
+  overflow-wrap: anywhere;
 }
 
 .artist {
