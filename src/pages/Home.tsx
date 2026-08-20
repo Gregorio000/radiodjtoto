@@ -22,18 +22,18 @@ export function Home() {
         <NowPlaying />
       </section>
 
-      {/* Coda + Cronologia */}
+      {/* Coda + Cronologia — una sola canzone ciascuna. */}
       <section className={`container ${styles.grid}`}>
         <TrackList
           title="A seguire"
           variant="queue"
-          tracks={nowPlaying?.queue ?? []}
+          tracks={(nowPlaying?.queue ?? []).slice(0, 1)}
           emptyLabel="La scaletta si aggiornerà a breve."
         />
         <TrackList
           title="Appena trasmessi"
           variant="history"
-          tracks={nowPlaying?.history ?? []}
+          tracks={(nowPlaying?.history ?? []).slice(0, 1)}
           emptyLabel="Nessun brano in cronologia."
         />
       </section>
