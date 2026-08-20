@@ -1,53 +1,17 @@
-import { useState, type FormEvent } from 'react';
 import { config } from '../config';
 import styles from './Contact.module.css';
 import page from './Page.module.css';
 
 /**
- * Pagina "Contatti": informazioni dirette + form di contatto.
- * Il form invia i messaggi via Web3Forms (nessun backend proprio):
- * imposta la access key in config.WEB3FORMS_ACCESS_KEY.
+ * Pagina "Contatti": solo i recapiti diretti (email, luogo, social),
+ * presentati in modo elegante. Nessun form.
  */
-type Status = 'idle' | 'sending' | 'success' | 'error';
-
 export function Contact() {
-  const [status, setStatus] = useState<Status>('idle');
-  const [errorMsg, setErrorMsg] = useState('');
-
-  const keyMissing = config.WEB3FORMS_ACCESS_KEY.trim() === '';
-
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    if (keyMissing) return;
-
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-    formData.append('access_key', config.WEB3FORMS_ACCESS_KEY);
-    formData.append('subject', 'Nuovo messaggio da RadioDJToto');
-    formData.append('from_name', 'RadioDJToto');
-
-    setStatus('sending');
-    setErrorMsg('');
-
-    try {
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { Accept: 'application/json' },
-        body: formData,
-      });
-      const data = await res.json();
-      if (data.success) {
-        setStatus('success');
-        form.reset();
-      } else {
-        setStatus('error');
-        setErrorMsg(data.message || 'Invio non riuscito. Riprova.');
-      }
-    } catch {
-      setStatus('error');
-      setErrorMsg('Errore di rete. Controlla la connessione e riprova.');
-    }
-  }
+  // Link che apre direttamente la finestra "nuovo messaggio" di Gmail nel
+  // browser, con il destinatario già compilato.
+  const gmailCompose = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+    config.contact.email
+  )}`;
 
   return (
     <>
@@ -60,93 +24,66 @@ export function Contact() {
         </p>
       </header>
 
-      <section className={`container ${styles.layout}`}>
-        {/* Info di contatto */}
-        <aside className={styles.info}>
-          <div className={styles.infoBlock}>
-            <span className={styles.infoLabel}>Email</span>
-            <a href={`mailto:${config.contact.email}`}>{config.contact.email}</a>
+      <section className={`container ${styles.wrap}`}>
+        <div className={styles.grid}>
+          <article className={styles.card}>
+            <span className={styles.label}>Email</span>
+            <a
+              className={styles.value}
+              href={gmailCompose}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              {config.contact.email}
+            </a>
+            <a
+              className={styles.cta}
+              href={gmailCompose}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Invia una email
+            </a>
+          </article>
+        </div>
+
+        <article className={`${styles.card} ${styles.socialCard}`}>
+          <span className={styles.label}>Seguici sui social</span>
+          <div className={styles.socialRow}>
+            <a
+              className={styles.socialLink}
+              href={config.social.instagram}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Instagram
+            </a>
+            <a
+              className={styles.socialLink}
+              href={config.social.facebook}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Facebook
+            </a>
+            <a
+              className={styles.socialLink}
+              href={config.social.youtube}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              YouTube
+            </a>
+            <a
+              className={styles.socialLink}
+              href={config.social.tiktok}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              TikTok
+            </a>
           </div>
-          {/* <div className={styles.infoBlock}>
-            <span className={styles.infoLabel}>Dove siamo</span>
-            <span>{config.contact.city}</span>
-          </div> */}
-          <div className={styles.infoBlock}>
-            <span className={styles.infoLabel}>Social</span>
-            <div className={styles.social}>
-              <a href={config.social.instagram} target="_blank" rel="noreferrer noopener">
-                Instagram
-              </a>
-              <a href={config.social.facebook} target="_blank" rel="noreferrer noopener">
-                Facebook
-              </a>
-              <a href={config.social.youtube} target="_blank" rel="noreferrer noopener">
-                YouTube
-              </a>
-              <a href={config.social.tiktok} target="_blank" rel="noreferrer noopener">
-                TikTok
-              </a>
-            </div>
-          </div>
-        </aside>
-
-        {/* Form */}
-        <form className={styles.form} onSubmit={handleSubmit}>
-          {status === 'success' ? (
-            <div className={styles.success} role="status">
-              <h3>Grazie di cuore! 🎶</h3>
-              <p>
-                Abbiamo ricevuto il tuo messaggio. Ti risponderemo il prima
-                possibile.
-              </p>
-            </div>
-          ) : (
-            <>
-              {/* Honeypot anti-spam (nascosto agli utenti reali) */}
-              <input
-                type="checkbox"
-                name="botcheck"
-                tabIndex={-1}
-                autoComplete="off"
-                style={{ display: 'none' }}
-                aria-hidden="true"
-              />
-
-              <div className={styles.field}>
-                <label htmlFor="name">Nome</label>
-                <input id="name" name="name" type="text" required autoComplete="name" />
-              </div>
-              <div className={styles.field}>
-                <label htmlFor="email">Email</label>
-                <input id="email" name="email" type="email" required autoComplete="email" />
-              </div>
-              <div className={styles.field}>
-                <label htmlFor="message">Messaggio</label>
-                <textarea id="message" name="message" rows={5} required />
-              </div>
-
-              {status === 'error' && (
-                <p className={styles.formError} role="alert">
-                  {errorMsg}
-                </p>
-              )}
-              {keyMissing && (
-                <p className={styles.formNote}>
-                  Il form non è ancora attivo: manca la access key di Web3Forms
-                  in <code>src/config.ts</code>.
-                </p>
-              )}
-
-              <button
-                type="submit"
-                className={styles.submit}
-                disabled={status === 'sending' || keyMissing}
-              >
-                {status === 'sending' ? 'Invio in corso…' : 'Invia messaggio'}
-              </button>
-            </>
-          )}
-        </form>
+        </article>
       </section>
     </>
   );

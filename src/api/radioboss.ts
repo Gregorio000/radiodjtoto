@@ -27,18 +27,16 @@ import { getMockNowPlaying } from './mock';
    ========================================================================= */
 
 /**
- * In sviluppo (`npm run dev`) inoltriamo la richiesta al proxy locale di Vite
- * (vedi vite.config.ts), così il browser non blocca la chiamata per CORS.
- * In produzione si usa l'URL assoluto configurato.
+ * URL da cui leggere il "now playing".
+ * - In produzione: la funzione serverless /api/nowplaying (API RadioBOSS Cloud
+ *   completa: corrente + successivo + cronologia + copertine).
+ * - In sviluppo (`npm run dev`): la funzione Vercel non è disponibile, quindi
+ *   leggiamo il solo brano corrente dallo stato Icecast tramite il proxy di
+ *   Vite (vedi vite.config.ts), giusto per avere un'anteprima locale.
  */
 function resolveNowPlayingUrl(url: string): string {
   if (import.meta.env.DEV) {
-    try {
-      const u = new URL(url);
-      return `/__radioboss${u.pathname}${u.search}`;
-    } catch {
-      return url;
-    }
+    return '/__radioboss/status-json.xsl';
   }
   return url;
 }

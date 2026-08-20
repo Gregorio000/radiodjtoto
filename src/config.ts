@@ -17,17 +17,13 @@
    ========================================================================= */
 
 export const config = {
-  /** Endpoint JSON RadioBoss con brano corrente / coda / cronologia.
-   *  Server RadioBoss.fm → pagina di stato Icecast (status-json.xsl). */
-  RADIOBOSS_NOWPLAYING_URL: 'https://c26.radioboss.fm:8795/status-json.xsl',
+  /** Endpoint JSON con brano corrente / coda / cronologia.
+   *  Punta alla funzione serverless /api/nowplaying (vedi api/nowplaying.js),
+   *  che interroga l'API di RadioBOSS Cloud tenendo segreta la API key. */
+  RADIOBOSS_NOWPLAYING_URL: '/api/nowplaying',
 
   /** URL dello stream audio live (Icecast/Shoutcast/MP3). */
   AUDIO_STREAM_URL: 'https://c26.radioboss.fm:8795/stream',
-
-  /** Access key di Web3Forms per il form Contatti.
-   *  Ottienila su https://web3forms.com inserendo l'email che riceverà i
-   *  messaggi, poi incolla qui la chiave. Finché è vuota, l'invio è disabilitato. */
-  WEB3FORMS_ACCESS_KEY: '',
 
   /** Intervallo di polling del "now playing", in millisecondi. */
   POLL_INTERVAL_MS: 15_000,
@@ -41,14 +37,13 @@ export const config = {
 
   /** Dati di contatto e social (usati in Contatti e nel Footer). */
   contact: {
-    email: 'info@radiodjtoto.it',
-    city: 'Napoli, Italia',
+    email: 'salvatorelamantia020159@gmail.com',
   },
   social: {
     instagram: 'https://instagram.com/salv.atore159',
     facebook: 'https://facebook.com/Salvatore.lamantia.129',
     youtube: 'https://youtube.com/@SalvatoreLaMantia-z3e',
-    tiktok: 'https://tiktok.com/@', // ID TikTok da inserire
+    tiktok: 'https://tiktok.com/@salvatorel59',
   },
 } as const;
 
