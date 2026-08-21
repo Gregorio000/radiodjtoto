@@ -38,6 +38,8 @@ export const config = {
   /** Dati di contatto e social (usati in Contatti e nel Footer). */
   contact: {
     email: 'salvatorelamantia020159@gmail.com',
+    phone: '+393522674488',
+    phoneDisplay: '+39 352 267 4488',
   },
   social: {
     instagram: 'https://instagram.com/salv.atore159',

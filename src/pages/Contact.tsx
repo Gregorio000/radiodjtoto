@@ -59,6 +59,16 @@ export function Contact() {
               Invia una email
             </a>
           </article>
+
+          <article className={styles.card}>
+            <span className={styles.label}>Telefono</span>
+            <a className={styles.value} href={`tel:${config.contact.phone}`}>
+              {config.contact.phoneDisplay}
+            </a>
+            <a className={styles.cta} href={`tel:${config.contact.phone}`}>
+              Chiama ora
+            </a>
+          </article>
         </div>
 
         <article className={`${styles.card} ${styles.socialCard}`}>
